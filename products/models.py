@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 
+
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
@@ -13,7 +14,7 @@ class Product(models.Model):
     category = models.CharField(max_length=100)
     stock = models.IntegerField()
     is_available = models.BooleanField(default=True)
-    picture = models.URLField(max_length=500, blank=True, null=True)
+    picture = models.CharField(max_length=500, blank=True, null=True)
     is_delete = models.BooleanField(default=False)
 
     def __str__(self):
