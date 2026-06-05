@@ -8,23 +8,35 @@ class ProductAPITests(APITestCase):
     def setUp(self):
         self.p1 = Product.objects.create(
             name="Laptop ASUS ROG",
-            price=15000000,
-            description="Gaming Laptop",
+            sku="SKU-ROG-01",
+            shop="ASUS Official",
             location="Jakarta",
+            price=15000000,
+            category="Electronics",
+            stock=10,
+            description="Gaming Laptop",
             is_delete=False
         )
         self.p2 = Product.objects.create(
             name="iPhone 14 Pro",
-            price=20000000,
-            description="Smartphone",
+            sku="SKU-IPHONE-02",
+            shop="Apple Store",
             location="Bandung",
+            price=20000000,
+            category="Electronics",
+            stock=5,
+            description="Smartphone",
             is_delete=False
         )
         self.p3 = Product.objects.create(
             name="Keyboard Mechanical",
-            price=800000,
-            description="Mechanical Keyboard",
+            sku="SKU-KEY-03",
+            shop="Keychron Store",
             location="Jakarta",
+            price=800000,
+            category="Electronics",
+            stock=2,
+            description="Mechanical Keyboard",
             is_delete=True  # Soft-deleted
         )
 
@@ -46,7 +58,7 @@ class ProductAPITests(APITestCase):
         links = products[0]["_links"]
         p1_id = str(self.p1.id)
         expected_links = [
-            {"rel": "self", "href": "http://localhost:8000/products/", "action": "POST", "types": ["application/json"]},
+            {"rel": "self", "href": "http://localhost:8000/products", "action": "POST", "types": ["application/json"]},
             {"rel": "self", "href": f"http://localhost:8000/products/{p1_id}/", "action": "GET", "types": ["application/json"]},
             {"rel": "self", "href": f"http://localhost:8000/products/{p1_id}/", "action": "PUT", "types": ["application/json"]},
             {"rel": "self", "href": f"http://localhost:8000/products/{p1_id}/", "action": "DELETE", "types": ["application/json"]}
@@ -57,9 +69,13 @@ class ProductAPITests(APITestCase):
         url = reverse('product-list')
         data = {
             "name": "Mouse Wireless Logi",
+            "sku": "SKU-MOUSE-04",
+            "shop": "Logitech Official",
+            "location": "Surabaya",
             "price": 300000,
             "description": "Wireless Mouse",
-            "location": "Surabaya"
+            "category": "Electronics",
+            "stock": 15
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -110,9 +126,13 @@ class ProductAPITests(APITestCase):
         url = reverse('product-detail', kwargs={'pk': self.p1.id})
         data = {
             "name": "Laptop ASUS ROG Zephyrus",
+            "sku": "SKU-ROG-01-NEW",
+            "shop": "ASUS Official Store",
+            "location": "Jakarta",
             "price": 18000000,
             "description": "High-end Gaming Laptop",
-            "location": "Jakarta"
+            "category": "Electronics",
+            "stock": 8
         }
         response = self.client.put(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
