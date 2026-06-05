@@ -12,7 +12,7 @@ class ProductSerializer(serializers.ModelSerializer):
     def get__links(self, obj):
         product_id = str(obj.id)
         return [
-            {"rel": "self", "href": "http://localhost:8000/products/", "action": "POST", "types": ["application/json"]},
+            {"rel": "self", "href": "http://localhost:8000/products", "action": "POST", "types": ["application/json"]},
             {"rel": "self", "href": f"http://localhost:8000/products/{product_id}/", "action": "GET", "types": ["application/json"]},
             {"rel": "self", "href": f"http://localhost:8000/products/{product_id}/", "action": "PUT", "types": ["application/json"]},
             {"rel": "self", "href": f"http://localhost:8000/products/{product_id}/", "action": "DELETE", "types": ["application/json"]}
